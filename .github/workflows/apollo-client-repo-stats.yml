@@ -13,7 +13,7 @@ on:
 jobs:
   platform-api-tests:
     runs-on: macos-latest
-    if: github.repository == 'team-prometheus-repo-health-cron'
+    if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
       - name: Checkout Apollo Client
         uses: actions/checkout@v4
