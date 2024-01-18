@@ -1,0 +1,43 @@
+name: platform-api-tests
+
+on:
+  push:
+    branches:
+      - main
+  # schedule:
+  #   - cron: "0 3 * * *"
+
+# env:
+#   GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+
+jobs:
+  platform-api-tests:
+    runs-on: macos-latest
+    if: github.repository == 'team-prometheus-repo-health-cron'
+    steps:
+      - name: Checkout Apollo Client
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client
+
+      - run: |
+          numOpenIssues="$(gh api graphql -F owner=$OWNER -F name=$REPO -f query='
+            query($name: String!, $owner: String!) {
+              repository(owner: $owner, name: $name) {
+                issues(states:OPEN){
+                  totalCount
+                }
+              }
+            }
+          ' --jq '.data.repository.issues.totalCount')"
+
+          echo 'NUM_OPEN_ISSUES='$numOpenIssues >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: "apollo-client"
+
+      - run: |
+          gh issue create --title "Issue report" --body "$NUM_OPEN_ISSUES issues remaining" --repo $GITHUB_REPOSITORY
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
