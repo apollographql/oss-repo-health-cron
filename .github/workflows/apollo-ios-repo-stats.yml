@@ -1,0 +1,127 @@
+name: apollo-ios-repo-stats
+
+on:
+  schedule:
+    - cron: "0 17 * * 1-5"
+
+jobs:
+  apollo-ios-repo-stats:
+    runs-on: ubuntu-latest
+    if: github.repository == 'apollographql/oss-repo-health-cron'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Checkout Apollo iOS repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-ios
+          path: apollo-ios
+
+      - name: Checkout Apollo iOS Dev repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-ios-dev
+          path: apollo-ios-dev
+
+      - name: Run get-relative-dates.sh
+        run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
+
+      - name: Run get-apollo-org-members.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/get-apollo-org-members.sh
+        env:
+          # GH_TOKEN has org:read scope
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Run prs-community-last-90-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-community-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-total-merged-last-90-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-total-merged-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run issues-closed-last-90-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-closed-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run issues-percentage-replied-last-90-days.sh
+        id: issues-percentage-replied-last-90-days
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh
+        id: prs-percentage-replied-last-90-days
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-ios-dev
+
+      - name: Run prs-percentage-replied-last-72-hours.sh
+        id: prs-without-replies-last-72-hours
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IGNORE_USERS: "-author:calvincestari -author:AnthonyMDev -author:BobaFetters"
+          REPOSITORY: apollo-ios-dev
+
+      - name: Run issues-percentage-replied-last-72-hours.sh
+        id: issues-without-replies-last-72-hours
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send a Slack notification
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # Slack channel id, channel name, or user id to post message
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          # You can pass in multiple channels to post to by providing
+          # a comma-delimited list of channel IDs
+          channel-id: ${{ secrets.APOLLO_IOS_SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Today's Apollo iOS repository health check :stopwatch:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Issues <72h old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*PRs <72h old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_CREATED }})"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}% (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

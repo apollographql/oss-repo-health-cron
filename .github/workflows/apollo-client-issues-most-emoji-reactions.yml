@@ -1,0 +1,64 @@
+name: apollo-client-issues-most-emoji-reactions
+
+on:
+  schedule:
+    # Every Monday at 1PM UTC (9AM EST)
+    - cron: "0 13 * * 1"
+
+jobs:
+  apollo-client-caretaker-handoff:
+    runs-on: ubuntu-latest
+    if: github.repository == 'apollographql/oss-repo-health-cron'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Checkout Apollo Client repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client
+          path: apollo-client
+
+      - name: Run get-relative-dates.sh
+        run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
+
+      - name: Run issues-with-most-emoji-reactions-last-90-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-most-emoji-reactions-last-90-days.sh
+        id: issues-with-most-emoji-reactions-last-90-days
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send a Slack notification
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          # Slack channel id, channel name, or user id to post message
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          # You can pass in multiple channels to post to by providing
+          # a comma-delimited list of channel IDs
+          channel-id: ${{ secrets.APOLLO_CLIENT_SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*A list of the top 10 issues sorted by most reactions over the last 90 days.*\n_Note: This :github: workflow will run every Monday at 1PM UTC._"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
