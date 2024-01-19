@@ -1,4 +1,4 @@
-name: apollo-client-repo-stats
+name: apollo-kotlin-repo-stats
 
 on:
   push:
@@ -8,28 +8,14 @@ on:
   #   - cron: "0 3 * * *"
 
 jobs:
-  apollo-client-repo-stats:
+  apollo-kotlin-repo-stats:
     runs-on: macos-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout Apollo Client
+        uses: actions/checkout@v3
         with:
-          path: main
-
-      - name: Checkout tools repo
-        uses: actions/checkout@v4
-        with:
-          repository: apollographql/apollo-client
-          path: apollo-client
-
-      - run: cd apollo-client && bash ../scripts/get-relative-dates.sh
-
-      - run: echo "$DATE_181_DAYS_AGO"
-
-        env:
-          # GH_TOKEN is a PAT with org:read scope
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          repository: apollographql/apollo-kotlin
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0
