@@ -27,30 +27,48 @@ jobs:
         run: cd apollo-client
 
       - name: Run get-relative-dates.sh
+        id: relative-dates
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
       - name: Run get-apollo-org-members.sh
+        id: apollo-org-members
+        if: steps.relative-dates.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-apollo-org-members.sh
         env:
           # GH_TOKEN is a PAT with org:read scope
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Run prs-community-last-90-days.sh
+        id: prs-community
+        if: steps.apollo-org-members.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/prs-community-last-90-days.sh
 
       - name: Run prs-total-merged-last-90-days.sh
+        id: prs-total-merged
+        if: steps.prs-community.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/prs-total-merged-last-90-days.sh
 
       - name: Run issues-closed-last-90-days.sh
+        id: issues-closed
+        if: steps.prs-total-merged.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/issues-closed-last-90-days.sh
 
       - name: Run issues-percentage-replied-last-90-days.sh
+        id: issues-percentage-replied
+        if: steps.issues-closed.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
 
       - name: Run prs-percentage-replied-last-90-days.sh
+        id: prs-percentage-replied
+        if: steps.issues-percentage-replied.outcome == 'success'
         run: bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
 
-      - run: echo $PERCENTAGE_PRS_REPLIED_TO
+      - name: Echo some values
+        id: echo-values
+        if: steps.prs-percentage-replied.outcome == 'success'
+        run: |
+          echo $PERCENTAGE_PRS_REPLIED_TO
+          echo $FILTERED_OUT_USERS
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0
