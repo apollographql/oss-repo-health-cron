@@ -48,11 +48,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run issues-percentage-replied-last-90-days.sh
+        id: issues-percentage-replied-last-90-days
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prs-percentage-replied-last-90-days.sh
+        id: prs-percentage-replied-last-90-days
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -69,9 +71,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: echo "*Issues <72hrs old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
-
-      - run: echo "*PRs <72hrs old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+      - run: |
+          echo "*Issues <72hrs old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+          echo "*PRs <72hrs old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+          echo "${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
+          echo "${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0
@@ -85,6 +89,13 @@ jobs:
       #     payload: |
       #       {
       #         "blocks": [
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "Today's Apollo Client repository health check :stopwatch:"
+      #             }
+      #           },
       #           {
       #             "type": "section",
       #             "fields": [
@@ -103,11 +114,11 @@ jobs:
       #             "fields": [
       #               {
       #                 "type": "mrkdwn",
-      #                 "text": "*% of issues in last 90 days with reply in <72 hrs:*\n"
+      #                 "text": "*% of issues in last 90 days with reply in <72 hrs:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
       #               },
       #               {
       #                 "type": "mrkdwn",
-      #                 "text": "*% of PRs in last 90 days with reply in <72 hrs:*\n"
+      #                 "text": "*% of PRs in last 90 days with reply in <72 hrs:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
       #               }
       #             ]
       #           }
