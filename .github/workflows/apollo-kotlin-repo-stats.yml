@@ -1,19 +1,19 @@
 name: apollo-kotlin-repo-stats
 
 on:
-  push:
-    branches:
-      - main
-  # schedule:
-  #   - cron: "0 3 * * *"
+  # push:
+  #   branches:
+  #     - main
+  schedule:
+    - cron: "0 3 * * *"
 
 jobs:
   apollo-kotlin-repo-stats:
     runs-on: macos-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
-      - name: Checkout Apollo Client
-        uses: actions/checkout@v3
+      - name: Checkout Apollo Kotlin
+        uses: actions/checkout@v4
         with:
           repository: apollographql/apollo-kotlin
 

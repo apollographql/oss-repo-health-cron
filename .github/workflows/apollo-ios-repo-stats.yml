@@ -1,19 +1,19 @@
 name: apollo-ios-repo-stats
 
 on:
-  push:
-    branches:
-      - main
-  # schedule:
-  #   - cron: "0 3 * * *"
+  # push:
+  #   branches:
+  #     - main
+  schedule:
+    - cron: "0 3 * * *"
 
 jobs:
   apollo-ios-repo-stats:
     runs-on: macos-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
-      - name: Checkout Apollo Client
-        uses: actions/checkout@v3
+      - name: Checkout Apollo iOS
+        uses: actions/checkout@v4
         with:
           repository: apollographql/apollo-ios
 
