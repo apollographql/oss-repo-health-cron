@@ -10,13 +10,12 @@ do
   else
     PR_DETAILS=$(gh pr view ${pr//,} --json comments,url)
     PR_URL=$(jq '. | .url' <<< $PR_DETAILS)
-    echo $PR_URL
     
+    echo $(jq '. | .comments' <<< $PR_DETAILS)
     # get number of comments by maintainers within the first 3 days
     # NB: manually filter out apollo-cla bot, but otherwise include all users
     # with CONTRIBUTOR association
     PR_COMMENTS=$(jq '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla")] | length' <<< $PR_DETAILS)
-    echo $PR_COMMENTS
 
     if [ "$PR_COMMENTS" = "0" ]; then
       PRS_SLACK_BOT_MESSAGE="${PRS_SLACK_BOT_MESSAGE}\n*<${PR_URL//\"}|${pr//,}>*"
