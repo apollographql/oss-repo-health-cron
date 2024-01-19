@@ -5,7 +5,7 @@ APOLLO_GRAPHQL_ORG_MEMBERS=$(gh api -H "Accept: application/vnd.github+json" -H 
 echo "Apollo GraphQL org members: ${APOLLO_GRAPHQL_ORG_MEMBERS}"
 
 # Filter out arbitrary users here, in addition to Apollo GraphQL org members
-FILTERED_OUT_USERS="-author:peakematt-2, -author:app/github-actions,"
+FILTERED_OUT_USERS="-author:peakematt-2 -author:app/github-actions"
 # Filter out arbitrary labels here
 FILTERED_OUT_LABELS="-label:\":christmas_tree: dependencies\""
 

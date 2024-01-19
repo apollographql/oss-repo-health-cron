@@ -5,7 +5,7 @@ on:
     branches:
       - main
   # schedule:
-  #   - cron: "0 3 * * *"
+  #   - cron: "0 12 * * *"
 
 jobs:
   apollo-client-repo-stats:
@@ -24,55 +24,55 @@ jobs:
           path: apollo-client
 
       - name: Run get-relative-dates.sh
-        id: relative-dates
+        # id: relative-dates
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
       - name: Run get-apollo-org-members.sh
-        id: apollo-org-members
-        if: steps.relative-dates.outcome == 'success'
+        # id: apollo-org-members
+        # if: steps.relative-dates.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/get-apollo-org-members.sh
         env:
           # GH_TOKEN is a PAT with org:read scope
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Run prs-community-last-90-days.sh
-        id: prs-community
-        if: steps.apollo-org-members.outcome == 'success'
+        # id: prs-community
+        # if: steps.apollo-org-members.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-community-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prs-total-merged-last-90-days.sh
-        id: prs-total-merged
-        if: steps.prs-community.outcome == 'success'
+        # id: prs-total-merged
+        # if: steps.prs-community.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-total-merged-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run issues-closed-last-90-days.sh
-        id: issues-closed
-        if: steps.prs-total-merged.outcome == 'success'
+        # id: issues-closed
+        # if: steps.prs-total-merged.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-closed-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run issues-percentage-replied-last-90-days.sh
-        id: issues-percentage-replied
-        if: steps.apollo-org-members.outcome == 'success'
+        # id: issues-percentage-replied
+        # if: steps.apollo-org-members.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prs-percentage-replied-last-90-days.sh
-        id: prs-percentage-replied
-        if: steps.apollo-org-members.outcome == 'success'
+        # id: prs-percentage-replied
+        # if: steps.apollo-org-members.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Echo some values
-        id: echo-values
-        if: steps.prs-percentage-replied.outcome == 'success'
+        # id: echo-values
+        # if: steps.prs-percentage-replied.outcome == 'success'
         run: |
           echo $PERCENTAGE_PRS_REPLIED_TO
           echo $PERCENTAGE_ISSUES_REPLIED_TO
