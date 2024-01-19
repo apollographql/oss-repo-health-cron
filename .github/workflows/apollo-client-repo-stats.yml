@@ -17,7 +17,7 @@ jobs:
         with:
           path: main
 
-      - name: Checkout tools repo
+      - name: Checkout Apollo Client repo
         uses: actions/checkout@v4
         with:
           repository: apollographql/apollo-client
@@ -75,6 +75,7 @@ jobs:
         if: steps.prs-percentage-replied.outcome == 'success'
         run: |
           echo $PERCENTAGE_PRS_REPLIED_TO
+          echo $PERCENTAGE_ISSUES_REPLIED_TO
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0

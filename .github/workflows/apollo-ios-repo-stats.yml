@@ -1,21 +1,87 @@
 name: apollo-ios-repo-stats
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  schedule:
-    - cron: "0 3 * * *"
+  push:
+    branches:
+      - main
+  # schedule:
+  #   - cron: "0 3 * * *"
 
 jobs:
   apollo-ios-repo-stats:
     runs-on: macos-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
-      - name: Checkout Apollo iOS
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Checkout Apollo iOS repo
         uses: actions/checkout@v4
         with:
           repository: apollographql/apollo-ios
+          path: apollo-ios
+
+      - name: Checkout Apollo iOS Dev repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-ios-dev
+          path: apollo-ios-dev
+
+      - name: Run get-relative-dates.sh
+        id: relative-dates
+        run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
+
+      - name: Run get-apollo-org-members.sh
+        id: apollo-org-members
+        if: steps.relative-dates.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/get-apollo-org-members.sh
+        env:
+          # GH_TOKEN is a PAT with org:read scope
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Run prs-community-last-90-days.sh
+        id: prs-community
+        if: steps.apollo-org-members.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-community-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-total-merged-last-90-days.sh
+        id: prs-total-merged
+        if: steps.prs-community.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-total-merged-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run issues-closed-last-90-days.sh
+        id: issues-closed
+        if: steps.prs-total-merged.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-closed-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run issues-percentage-replied-last-90-days.sh
+        id: issues-percentage-replied
+        if: steps.apollo-org-members.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh
+        id: prs-percentage-replied
+        if: steps.apollo-org-members.outcome == 'success'
+        run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Echo some values
+        id: echo-values
+        if: steps.prs-percentage-replied.outcome == 'success'
+        run: |
+          echo $PERCENTAGE_PRS_REPLIED_TO
+          echo $PERCENTAGE_ISSUES_REPLIED_TO
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0
