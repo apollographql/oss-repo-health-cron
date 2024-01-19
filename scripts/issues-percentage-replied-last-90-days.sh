@@ -24,6 +24,8 @@ do
 
     echo "3 days after issue opened: ${THREE_DAYS_AFTER_ISSUE_OPENED}"
 
+    echo $ISSUE_DETAILS
+
     # get number of comments by maintainers within the first 3 days
     # NB: manually filter out apollo-cla bot, but otherwise include all users
     # with MEMBER association (i.e. Apollo GraphQL org members)

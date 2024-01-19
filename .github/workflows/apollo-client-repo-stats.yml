@@ -78,7 +78,6 @@ jobs:
         if: steps.prs-percentage-replied.outcome == 'success'
         run: |
           echo $PERCENTAGE_PRS_REPLIED_TO
-          echo $FILTERED_OUT_USERS
 
       # - name: Send a Slack notification
       #   uses: slackapi/slack-github-action@v1.24.0
