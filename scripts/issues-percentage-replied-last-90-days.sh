@@ -29,7 +29,7 @@ do
     # get number of comments by maintainers within the first 3 days
     # NB: manually filter out apollo-cla bot, but otherwise include all users
     # with MEMBER association (i.e. Apollo GraphQL org members)
-    ISSUE_COMMENTS=$(jq --arg DATE "$THREE_DAYS_AFTER_ISSUE_OPENED" '. | [.comments[] | select(.authorAssociation == "MEMBER" and .author.login != "apollo-cla" and .createdAt <= $DATE)] | length' <<< $ISSUE_DETAILS)
+    ISSUE_COMMENTS=$(jq --arg DATE "$THREE_DAYS_AFTER_ISSUE_OPENED" '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .createdAt <= $DATE)] | length' <<< $ISSUE_DETAILS)
 
     echo "Issue comments: ${ISSUE_COMMENTS}"
 
