@@ -27,7 +27,7 @@ do
     fi
 
     if [ "$NUM_PRS_TO_REPLY_TO" = "0" ]; then
-      PRS_SLACK_BOT_MESSAGE="All caught up :tada:"
+      PRS_SLACK_BOT_MESSAGE=" All caught up :tada:"
     fi
   fi
 done
