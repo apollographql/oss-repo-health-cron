@@ -98,6 +98,19 @@ jobs:
       #               }
       #             ]
       #           },
+      #           {
+      #             "type": "section",
+      #             "fields": [
+      #               {
+      #                 "type": "mrkdwn",
+      #                 "text": "*% of issues in last 90 days with reply in <72 hrs:*\n"
+      #               },
+      #               {
+      #                 "type": "mrkdwn",
+      #                 "text": "*% of PRs in last 90 days with reply in <72 hrs:*\n"
+      #               }
+      #             ]
+      #           }
       #         ]
       #       }
       #   env:

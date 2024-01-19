@@ -10,18 +10,19 @@ do
   else
     ISSUE_DETAILS=$(gh issue view ${issue//,} --json comments,url)
     ISSUE_URL=$(jq '. | .url' <<< $ISSUE_DETAILS)
-
+    echo $ISSUE_URL
+    
     # get number of comments by maintainers within the first 3 days
     # NB: manually filter out apollo-cla bot, but otherwise include all users
     # with CONTRIBUTOR association
     ISSUE_COMMENTS=$(jq '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla")] | length' <<< $ISSUE_DETAILS)
+    echo $ISSUE_COMMENTS
 
     if [ "$ISSUE_COMMENTS" = "0" ]; then
       ISSUES_SLACK_BOT_MESSAGE="${ISSUES_SLACK_BOT_MESSAGE}\n*<${ISSUE_URL//\"}|${issue//,}>*"
       echo "Issue without a reply in 72 hours: ${issue//,}"
     else
       echo "Issue with a reply in 72 hours: ${issue//,}"
-      NUM_ISSUES_REPLIED_TO=$((NUM_ISSUES_REPLIED_TO+1))
     fi
   fi
 done
