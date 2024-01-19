@@ -23,7 +23,7 @@ jobs:
           repository: apollographql/apollo-client
           path: apollo-client
 
-      - run: pwd && cd apollo-client && bash ${GITHUB_WORKSPACE}/scripts/get-relative-dates.sh
+      - run: cd apollo-client && pwd && bash ../scripts/get-relative-dates.sh
 
       - run: echo "$DATE_181_DAYS_AGO"
 
