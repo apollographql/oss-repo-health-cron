@@ -26,7 +26,7 @@ do
       echo "PR with a reply in 72 hours: ${pr//,}"
     fi
 
-    if ["$NUM_PRS_TO_REPLY_TO" = "0"]; then
+    if [ "$NUM_PRS_TO_REPLY_TO" = "0" ]; then
       PRS_SLACK_BOT_MESSAGE="All caught up :tada:"
     fi
   fi

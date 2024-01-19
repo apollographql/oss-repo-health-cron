@@ -27,7 +27,7 @@ do
     fi
 
 
-    if ["$NUM_ISSUES_TO_REPLY_TO" = "0"]; then
+    if [ "$NUM_ISSUES_TO_REPLY_TO" = "0" ]; then
       ISSUES_SLACK_BOT_MESSAGE="All caught up :tada:"
     fi
   fi
