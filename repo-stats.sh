@@ -176,7 +176,6 @@ function main() {
     if [ "$issue" = "[" ] || [ "$issue" = "]" ]; then
       :
     else
-      # ISSUE_OPENED_DATE=$(gh issue view ${issue//,} --json createdAt --jq '.createdAt')
       ISSUE_DETAILS=$(gh issue view ${issue//,} --json createdAt,comments)
 
       ISSUE_OPENED_DATE=$(jq '. | .createdAt' <<< $ISSUE_DETAILS)
