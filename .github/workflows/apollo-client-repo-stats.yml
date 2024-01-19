@@ -61,14 +61,14 @@ jobs:
 
       - name: Run issues-percentage-replied-last-90-days.sh
         id: issues-percentage-replied
-        if: steps.issues-closed.outcome == 'success'
+        if: steps.apollo-org-members.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prs-percentage-replied-last-90-days.sh
         id: prs-percentage-replied
-        if: steps.issues-percentage-replied.outcome == 'success'
+        if: steps.apollo-org-members.outcome == 'success'
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
