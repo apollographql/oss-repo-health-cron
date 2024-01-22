@@ -95,11 +95,11 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*Issues <72hrs old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*Issues <72h old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*PRs <72hrs old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*PRs <72h old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     }
                   ]
                 },
@@ -108,11 +108,11 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*% of issues in last 90 days with reply in <72 hrs:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
+                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*% of PRs in last 90 days with reply in <72 hrs:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
+                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
                     }
                   ]
                 }
