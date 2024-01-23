@@ -16,8 +16,6 @@ if [ "$PRS_CREATED_LAST_3_DAYS" != [] ]; then
       PR_REVIEW_COMMENTS=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/apollographql/${REPOSITORY}/pulls/${pr//,}/comments")
       PR_REVIEW_COMMENTS_LENGTH=$(jq '. | length' <<< $PR_REVIEW_COMMENTS)
       
-      echo $PR_REVIEW_COMMENTS
-      echo $(jq '. | .comments' <<< $PR_DETAILS)
       # get number of comments by maintainers within the first 3 days
       # NB: manually filter out apollo-cla bot, but otherwise include all users
       # with CONTRIBUTOR association

@@ -1,11 +1,11 @@
 name: apollo-client-repo-stats
 
 on:
-  push:
-    branches:
-      - main
-  # schedule:
-  #   - cron: "0 12 * * 1-5"
+  # push:
+  #   branches:
+  #     - main
+  schedule:
+    - cron: "0 12 * * 1-5"
 
 jobs:
   apollo-client-repo-stats:
@@ -73,51 +73,51 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Send a Slack notification
-      #   uses: slackapi/slack-github-action@v1.24.0
-      #   with:
-      #     # Slack channel id, channel name, or user id to post message
-      #     # See also: https://api.slack.com/methods/chat.postMessage#channels
-      #     # You can pass in multiple channels to post to by providing
-      #     # a comma-delimited list of channel IDs
-      #     channel-id: "C06EGAW8Q3F"
-      #     payload: |
-      #       {
-      #         "blocks": [
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "Today's Apollo Client repository health check :stopwatch:"
-      #             }
-      #           },
-      #           {
-      #             "type": "section",
-      #             "fields": [
-      #               {
-      #                 "type": "mrkdwn",
-      #                 "text": "*Issues <72h old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
-      #               },
-      #               {
-      #                 "type": "mrkdwn",
-      #                 "text": "*PRs <72h old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
-      #               }
-      #             ]
-      #           },
-      #           {
-      #             "type": "section",
-      #             "fields": [
-      #               {
-      #                 "type": "mrkdwn",
-      #                 "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
-      #               },
-      #               {
-      #                 "type": "mrkdwn",
-      #                 "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
-      #               }
-      #             ]
-      #           }
-      #         ]
-      #       }
-      #   env:
-      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Send a Slack notification
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          # Slack channel id, channel name, or user id to post message
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          # You can pass in multiple channels to post to by providing
+          # a comma-delimited list of channel IDs
+          channel-id: "C06EGAW8Q3F"
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Today's Apollo Client repository health check :stopwatch:"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Issues <72h old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*PRs <72h old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
