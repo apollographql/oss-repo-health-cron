@@ -64,6 +64,7 @@ jobs:
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client
 
       - name: Run issues-percentage-replied-last-72-hours.sh
         id: issues-without-replies-last-72-hours

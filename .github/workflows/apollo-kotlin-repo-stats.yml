@@ -65,6 +65,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IGNORE_USERS: "-author:BoD -author:martinbonnin"
+          REPOSITORY: apollo-kotlin
 
       - name: Run issues-percentage-replied-last-72-hours.sh
         id: issues-without-replies-last-72-hours

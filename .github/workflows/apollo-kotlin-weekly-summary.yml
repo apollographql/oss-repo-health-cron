@@ -1,0 +1,68 @@
+name: apollo-kotlin-weekly-summary
+
+on:
+  schedule:
+    # Every Wednesday at 8:00 AM PST
+    - cron: "0 16 * * 3"
+
+jobs:
+  apollo-kotlin-weekly-summary:
+    runs-on: macos-latest
+    if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Checkout Apollo Kotlin repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-kotlin
+          path: apollo-kotlin
+
+      # - name: Run get-relative-dates.sh
+      #   run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
+
+      # - name: Run apollo-client-caretaker-handoff.sh
+      #   run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-client-caretaker-handoff.sh
+      #   id: caretaker-handoff
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     PD_TOKEN: ${{ secrets.PD_TOKEN }}
+
+      # - name: Send a Slack notification
+      #   uses: slackapi/slack-github-action@v1.24.0
+      #   with:
+      #     # Slack channel id, channel name, or user id to post message
+      #     # See also: https://api.slack.com/methods/chat.postMessage#channels
+      #     # You can pass in multiple channels to post to by providing
+      #     # a comma-delimited list of channel IDs
+      #     channel-id: "C06EGAW8Q3F"
+      #     payload: |
+      #       {
+      #         "blocks": [
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "Apollo Client caretaker rotation hand-off :running: Thanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:"
+      #             }
+      #           },
+      #           {
+      #             "type": "section",
+      #             "fields": [
+      #               {
+      #                 "type": "mrkdwn",
+      #                 "text": "Issues with new comments in the last week:*\n${{ steps.caretaker-handoff.outputs.CARETAKER_HANDOFF_SLACK_BOT_MESSAGE_ISSUES }}%"
+      #               },
+      #               {
+      #                 "type": "mrkdwn",
+      #                 "text": "PRs with new comments in the last week:*\n${{ steps.caretaker-handoff.outputs.CARETAKER_HANDOFF_SLACK_BOT_MESSAGE_PRS }}%"
+      #               }
+      #             ]
+      #           }
+      #         ]
+      #       }
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
