@@ -78,7 +78,6 @@ jobs:
           # See also: https://api.slack.com/methods/chat.postMessage#channels
           # You can pass in multiple channels to post to by providing
           # a comma-delimited list of channel IDs
-          # channel id for #team-prometheus-repository-health
           channel-id: "C06EGAW8Q3F"
           payload: |
             {
