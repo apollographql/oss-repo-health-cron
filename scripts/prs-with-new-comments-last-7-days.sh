@@ -2,7 +2,7 @@
 
 WEEKLY_SLACK_BOT_MESSAGE_PRS=""
 
-ALL_PRS=$(gh pr list --search "${FILTERED_OUT_LABELS}" --limit 1000 --json number --jq '[.[] | .number]')
+ALL_PRS=$(gh pr list --search "${FILTERED_OUT_LABELS} ${IGNORE_USERS} is:open" --limit 1000 --json number --jq '[.[] | .number]')
 
 for pr in $(echo -e $ALL_PRS | jq -s 'flatten(1)')
 do

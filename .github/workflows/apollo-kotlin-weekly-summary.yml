@@ -34,6 +34,7 @@ jobs:
         id: prs-new-comments-last-7-days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IGNORE_USERS: "-author:BoD -author:martinbonnin"
 
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.24.0
