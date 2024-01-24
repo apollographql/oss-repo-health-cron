@@ -3,7 +3,7 @@ name: apollo-ios-weekly-summary
 on:
   schedule:
     # Every Wednesday at 8:00 AM PST
-    - cron: "0 16 * * 3"
+    - cron: "0 17 * * 3"
 
 jobs:
   apollo-ios-weekly-summary:
