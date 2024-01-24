@@ -20,7 +20,7 @@ if [ "$ISSUES_CREATED_LAST_90_DAYS" != [] ]; then
       # get number of comments by maintainers within the first 3 days
       # NB: manually filter out apollo-cla bot, but otherwise include all users
       # with CONTRIBUTOR association
-      ISSUE_COMMENTS=$(jq --arg DATE "$THREE_DAYS_AFTER_ISSUE_OPENED" '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "github-actions" and .createdAt <= $DATE)] | length' <<< $ISSUE_DETAILS)
+      ISSUE_COMMENTS=$(jq --arg DATE "$THREE_DAYS_AFTER_ISSUE_OPENED" '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions" and .createdAt <= $DATE)] | length' <<< $ISSUE_DETAILS)
 
       if [ "$ISSUE_COMMENTS" = "0" ]; then
         echo "Issue without a reply in 72 hours: ${issue//,}"

@@ -40,6 +40,7 @@ jobs:
         run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-with-new-comments-last-7-days.sh
         id: prs-new-comments-last-7-days
         env:
+          REPOSITORY: apollo-ios-dev
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IGNORE_USERS: "-author:AnthonyMDev -author:calvincestari -author:BobaFetters -author:app/renovate -author:app/github-actions"
 

@@ -17,7 +17,7 @@ if [ "$ISSUES_CREATED_LAST_3_DAYS" != [] ]; then
       # get number of comments by maintainers within the first 3 days
       # NB: manually filter out apollo-cla bot, but otherwise include all users
       # with CONTRIBUTOR association
-      ISSUE_COMMENTS=$(jq '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "github-actions")] | length' <<< $ISSUE_DETAILS)
+      ISSUE_COMMENTS=$(jq '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions")] | length' <<< $ISSUE_DETAILS)
 
       if [ "$ISSUE_COMMENTS" = "0" ]; then
         ISSUES_SLACK_BOT_MESSAGE="${ISSUES_SLACK_BOT_MESSAGE}\n*<${ISSUE_URL//\"}|${issue//,}>*"
