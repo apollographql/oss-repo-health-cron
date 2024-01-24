@@ -114,7 +114,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
+                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}% (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
                     }
                   ]
                 }
