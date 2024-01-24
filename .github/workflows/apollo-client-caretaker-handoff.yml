@@ -41,6 +41,7 @@ jobs:
         id: prs-new-comments-last-7-days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IGNORE_USERS: "-author:alessbell -author:jerelmiller -author:phryneas -author:app/renovate -author:app/github-actions"
 
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.24.0
@@ -57,7 +58,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo Client caretaker rotation hand-off :running: Thanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:"
+                    "text": "Apollo Client caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:"
                   }
                 },
                 {
