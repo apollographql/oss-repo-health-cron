@@ -115,11 +115,11 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}%"
+                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_CREATED }})"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}%"
+                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
                     }
                   ]
                 }
