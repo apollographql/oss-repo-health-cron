@@ -58,11 +58,11 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "Issues with new comments in the last week:*\n${{ steps.issues-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_ISSUES }}%"
+                      "text": "Issues with new comments in the last week:*\n${{ steps.issues-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_ISSUES }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "PRs with new comments in the last week:*\n${{ steps.prs-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_PRS }}%"
+                      "text": "PRs with new comments in the last week:*\n${{ steps.prs-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_PRS }}"
                     }
                   ]
                 }
