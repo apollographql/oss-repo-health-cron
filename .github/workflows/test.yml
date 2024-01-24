@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          if [ "$STATE_REASON" == "complete" ]; then
+          if [ "$STATE_REASON" == "completed" ]; then
             gh issue comment "$NUMBER" --body "$BODY"
           else
             echo "Issue was closed as not planned, skipping comment."
