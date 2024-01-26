@@ -17,7 +17,7 @@ do
 
     PR_REVIEW_COMMENTS=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/apollographql/${REPOSITORY}/pulls/${pr//,}/comments")
 
-    PR_REVIEW_COMMENTS_BY_MAINTAINERS=$(jq --arg DATE "$DATE_7_DAYS_AGO" '[.[] | select(.author_association == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions" and .created_at >= $DATE)] | length' <<< $PR_REVIEW_COMMENTS)
+    PR_REVIEW_COMMENTS_BY_MAINTAINERS=$(jq --arg DATE "$DATE_7_DAYS_AGO" '[.[] | select((.author_association == "CONTRIBUTOR" or .author_association == "MEMBER") and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions" and .created_at >= $DATE)] | length' <<< $PR_REVIEW_COMMENTS)
 
     if [ "$PR_COMMENTS" = "0" ] && [ "$PR_REVIEW_COMMENTS_BY_MAINTAINERS" = "0" ]; then
       echo "No new comments in the last 7 days: ${pr//,}"

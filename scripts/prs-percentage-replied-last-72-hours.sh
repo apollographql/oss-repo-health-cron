@@ -16,12 +16,12 @@ if [ "$PRS_CREATED_LAST_3_DAYS" != [] ]; then
       
       PR_REVIEW_COMMENTS=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/apollographql/${REPOSITORY}/pulls/${pr//,}/comments")
 
-      PR_REVIEW_COMMENTS_BY_MAINTAINERS=$(jq '[.[] | select(.author_association == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions")] | length' <<< $PR_REVIEW_COMMENTS)
+      PR_REVIEW_COMMENTS_BY_MAINTAINERS=$(jq '[.[] | select((.author_association == "CONTRIBUTOR" or .author_association == "MEMBER") and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions")] | length' <<< $PR_REVIEW_COMMENTS)
       
       # get number of comments by maintainers within the first 3 days
       # NB: manually filter out apollo-cla bot, but otherwise include all users
       # with CONTRIBUTOR association
-      PR_COMMENTS=$(jq '. | [.comments[] | select(.authorAssociation == "CONTRIBUTOR" and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions")] | length' <<< $PR_DETAILS)
+      PR_COMMENTS=$(jq '. | [.comments[] | select((.authorAssociation == "CONTRIBUTOR" or .authorAssociation == "MEMBER") and .author.login != "apollo-cla" and .author.login != "netlify" and .author.login != "github-actions")] | length' <<< $PR_DETAILS)
 
       if [ "$PR_COMMENTS" = "0" ] && [ "$PR_REVIEW_COMMENTS_BY_MAINTAINERS" = "0" ]; then
         PRS_SLACK_BOT_MESSAGE="${PRS_SLACK_BOT_MESSAGE}\n*<${PR_URL//\"}|${pr//,}>*"
