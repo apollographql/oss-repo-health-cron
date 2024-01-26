@@ -35,7 +35,7 @@ do
   fi
 done
 
-PERCENTAGE_PRS_REPLIED_TO=$(bc <<< "scale=1; ($NUM_PRS_REPLIED_TO/$NUM_PRS_CREATED) * 100")
+PERCENTAGE_PRS_REPLIED_TO=$(bc <<< "scale=4; ($NUM_PRS_REPLIED_TO/$NUM_PRS_CREATED) * 100" | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
 echo "PRs replied to within 72 hours: ${PERCENTAGE_PRS_REPLIED_TO}%"
 
 echo "PERCENTAGE_PRS_REPLIED_TO=${PERCENTAGE_PRS_REPLIED_TO}" >> "$GITHUB_OUTPUT"
