@@ -32,7 +32,7 @@ if [ "$ISSUES_CREATED_LAST_90_DAYS" != [] ]; then
   done
 fi
 
-PERCENTAGE_ISSUES_REPLIED_TO=$(bc <<< "scale=4; ($NUM_ISSUES_REPLIED_TO/$NUM_ISSUES_CREATED)" | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
+PERCENTAGE_ISSUES_REPLIED_TO=$(bc <<< "scale=4; ($NUM_ISSUES_REPLIED_TO/$NUM_ISSUES_CREATED) * 100" | sed '/\./ s/\.\{0,1\}0\{1,\}$//')
 echo "Issues replied to within 72 hours: ${PERCENTAGE_ISSUES_REPLIED_TO}%"
 
 echo "PERCENTAGE_ISSUES_REPLIED_TO=${PERCENTAGE_ISSUES_REPLIED_TO}" >> "$GITHUB_OUTPUT"
