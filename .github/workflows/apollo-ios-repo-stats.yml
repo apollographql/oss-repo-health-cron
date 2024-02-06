@@ -71,6 +71,7 @@ jobs:
         run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IGNORE_USERS: "-author:calvincestari -author:AnthonyMDev -author:BobaFetters"
           REPOSITORY: apollo-ios-dev
 
       - name: Run issues-percentage-replied-last-72-hours.sh
