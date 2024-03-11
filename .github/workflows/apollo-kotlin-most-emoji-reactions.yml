@@ -1,11 +1,12 @@
-name: apollo-kotlin-weekly-summary
+name: apollo-kotlin-issues-most-emoji-reactions
 
 on:
   schedule:
-    - cron: "0 8 * * 3"
+    # Every Tuesday at 1PM UTC (9AM EST)
+    - cron: "0 13 * * 2"
 
 jobs:
-  apollo-kotlin-weekly-summary:
+  apollo-client-caretaker-handoff:
     runs-on: macos-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
@@ -23,19 +24,11 @@ jobs:
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
-      - name: Run issues-with-new-comments-last-7-days.sh
-        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
-        id: issues-new-comments-last-7-days
+      - name: Run issues-with-most-emoji-reactions-last-90-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-most-emoji-reactions-last-90-days.sh
+        id: issues-with-most-emoji-reactions-last-90-days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run prs-with-new-comments-last-7-days.sh
-        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/prs-with-new-comments-last-7-days.sh
-        id: prs-new-comments-last-7-days
-        env:
-          REPOSITORY: apollo-kotlin
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IGNORE_USERS: "-author:BoD -author:martinbonnin -author:app/renovate -author:app/github-actions"
 
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.25.0
@@ -50,22 +43,21 @@ jobs:
               "blocks": [
                 {
                   "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Apollo Kotlin weekly rollup :newspaper:\n_Note: This :github: workflow will run every Wednesday at 8AM UTC._"
-                  }
+                  text: {
+                    type: 'mrkdwn',
+                    text: '*A list of the top 10 issues sorted by most reactions over the last 90 days.*\n_Note: This :github: workflow will run every Tuesday at 1PM UTC._',
+                  },
+                },
+                {
+                  type: 'divider',
                 },
                 {
                   "type": "section",
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "Issues with new comments in the last week:\n${{ steps.issues-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_ISSUES }}"
+                      "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
                     },
-                    {
-                      "type": "mrkdwn",
-                      "text": "PRs with new comments in the last week:\n${{ steps.prs-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_PRS }}"
-                    }
                   ]
                 }
               ]
