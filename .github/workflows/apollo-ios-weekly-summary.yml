@@ -59,7 +59,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo iOS weekly rollup :newspaper:"
+                    "text": "Apollo iOS weekly rollup :newspaper:\n_Note: This :github: workflow will run every Wednesday at 5PM UTC._"
                   }
                 },
                 {
