@@ -49,11 +49,11 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*A list of the top 10 issues sorted by most reactions over the last 90 days.*",
-                  },
+                    "text": "*A list of the top 10 issues sorted by most reactions over the last 90 days.*"
+                  }
                 },
                 {
-                  "type": "divider",
+                  "type": "divider"
                 },
                 {
                   "type": "section",
@@ -61,7 +61,7 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
-                    },
+                    }
                   ]
                 }
               ]
