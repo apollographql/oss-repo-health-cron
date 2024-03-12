@@ -53,12 +53,12 @@ jobs:
                 },
                 {
                   "type": "section",
-                  "fields": [
+                  "text": {
                     {
                       "type": "mrkdwn",
                       "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
                     }
-                  ]
+                  }
                 }
               ]
             }

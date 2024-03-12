@@ -46,8 +46,13 @@ for row in $(echo "${ISSUES_CREATED_LAST_90_DAYS}" | jq -r '.[] | @base64'); do
         EMOJI_STRING="${EMOJI_STRING} ${EMOJI_REMAPPED} (${REACTION_TOTAL_COUNT})"
         echo "Reaction users: $REACTION_TOTAL_COUNT"
     done
-    MESSAGE="${MESSAGE}${INDEX}. [<${ISSUE_URL}|#${ISSUE_NUMBER}>,${EMOJI_STRING}]: ${ISSUE_TITLE}\n"
-    INDEX=$((INDEX+1))
+
+    echo "Emoji string: $EMOJI_STRING"
+    if [ "$EMOJI_STRING" ]; then
+      # if no reactions, then don't include in message
+      MESSAGE="${MESSAGE}${INDEX}. *<${ISSUE_URL}|#${ISSUE_NUMBER}>*${EMOJI_STRING} - ${ISSUE_TITLE}\n"
+      INDEX=$((INDEX+1))
+    fi
 done
 
 QUOTES_ESCAPED_MESSAGE=$(echo $MESSAGE | tr \" \')
