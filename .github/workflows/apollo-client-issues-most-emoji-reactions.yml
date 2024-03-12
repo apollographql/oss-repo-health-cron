@@ -1,13 +1,9 @@
 name: apollo-client-issues-most-emoji-reactions
 
 on:
-  push:
-    branches:
-      - main
-# on:
-#   schedule:
-#     # Every Monday at 1PM UTC (9AM EST)
-#     - cron: "0 13 * * 1"
+  schedule:
+    # Every Monday at 1PM UTC (9AM EST)
+    - cron: "0 13 * * 1"
 
 jobs:
   apollo-client-caretaker-handoff:
@@ -49,7 +45,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*A list of the top 10 issues sorted by most reactions over the last 90 days.*"
+                    "text": "*A list of the top 10 issues sorted by most reactions over the last 90 days.*\n_Note: This :github: workflow will run every Monday at 1PM UTC._"
                   }
                 },
                 {
