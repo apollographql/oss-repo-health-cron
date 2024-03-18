@@ -1,9 +1,13 @@
 name: apollo-ios-issues-most-emoji-reactions
 
+# on:
+#   schedule:
+#     # Every Monday at 1PM UTC (9AM EST)
+#     - cron: "0 13 * * 1"
 on:
-  schedule:
-    # Every Monday at 1PM UTC (9AM EST)
-    - cron: "0 13 * * 1"
+  push:
+    branches:
+      - main
 
 jobs:
   apollo-client-caretaker-handoff:
@@ -54,10 +58,8 @@ jobs:
                 {
                   "type": "section",
                   "text": {
-                    {
-                      "type": "mrkdwn",
-                      "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
-                    }
+                    "type": "mrkdwn",
+                    "text": "${{ steps.issues-with-most-emoji-reactions-last-90-days.outputs.WEEKLY_TOP_EMOJI_UPVOTED_ISSUES }}"
                   }
                 }
               ]
