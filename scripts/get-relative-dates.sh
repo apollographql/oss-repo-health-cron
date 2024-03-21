@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-DATE_2_DAYS_IN_FUTURE=$(date -j -v+2d '+%Y-%m-%d')
-DATE_TOMORROW=$(date -j -v+1d '+%Y-%m-%d')
+DATE_2_DAYS_IN_FUTURE=$(date -d "+2 days" '+%Y-%m-%d')
+DATE_TOMORROW=$(date -d "+1 day" '+%Y-%m-%d')
 DATE_TODAY=$(date +"%Y-%m-%d")
-DATE_YESTERDAY=$(date -j -v-1d '+%Y-%m-%d')
+DATE_YESTERDAY=$(date -d "-1 day" '+%Y-%m-%d')
 
-DATE_2_DAYS_AGO=$(date -j -v-2d '+%Y-%m-%d')
-DATE_3_DAYS_AGO=$(date -j -v-3d '+%Y-%m-%d')
-DATE_7_DAYS_AGO=$(date -j -v-7d '+%Y-%m-%d')
-DATE_90_DAYS_AGO=$(date -j -v-90d '+%Y-%m-%d')
-DATE_91_DAYS_AGO=$(date -j -v-91d '+%Y-%m-%d')
-DATE_181_DAYS_AGO=$(date -j -v-181d '+%Y-%m-%d')
+DATE_2_DAYS_AGO=$(date -d "-2 days" '+%Y-%m-%d')
+DATE_3_DAYS_AGO=$(date -d "-3 days" '+%Y-%m-%d')
+DATE_7_DAYS_AGO=$(date -d "-7 days" '+%Y-%m-%d')
+DATE_90_DAYS_AGO=$(date -d "-90 days" '+%Y-%m-%d')
+DATE_91_DAYS_AGO=$(date -d "-91 days" '+%Y-%m-%d')
+DATE_181_DAYS_AGO=$(date -d "-181 days" '+%Y-%m-%d')
 
 
 echo "DATE_2_DAYS_IN_FUTURE=${DATE_2_DAYS_IN_FUTURE}" >> "$GITHUB_ENV"
