@@ -10,7 +10,7 @@ on:
 jobs:
   apollo-client-repo-stats:
     runs-on: ubuntu-latest
-    if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
+    if: github.repository == 'apollographql/oss-repo-health-cron'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
