@@ -9,7 +9,7 @@ on:
 
 jobs:
   apollo-kotlin-repo-stats:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     if: github.repository == 'apollographql/team-prometheus-repo-health-cron'
     steps:
       - name: Checkout
