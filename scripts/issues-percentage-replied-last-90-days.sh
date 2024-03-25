@@ -15,7 +15,7 @@ if [ "$ISSUES_CREATED_LAST_90_DAYS" != [] ]; then
       ISSUE_OPENED_DATE=$(jq '. | .createdAt' <<< $ISSUE_DETAILS)
 
       # get relative datetime 3 days after issue opened
-      THREE_DAYS_AFTER_ISSUE_OPENED=$(date -j -v+3d -f "%Y-%m-%dT%H:%M:%SZ" "${ISSUE_OPENED_DATE//\"}" "+%Y-%m-%dT%H:%M:%SZ")
+      THREE_DAYS_AFTER_ISSUE_OPENED=$(date -u -d"${ISSUE_OPENED_DATE//\"} +3 days" "+%Y-%m-%dT%H:%M:%SZ")
 
       # get number of comments by maintainers within the first 3 days
       # NB: manually filter out apollo-cla bot, but otherwise include all users

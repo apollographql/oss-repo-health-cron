@@ -14,7 +14,7 @@ do
     PR_OPENED_DATE=$(jq '. | .createdAt' <<< $PR_DETAILS)
 
     # get relative datetime 3 days after issue opened
-    THREE_DAYS_AFTER_PR_OPENED=$(date -j -v+3d -f "%Y-%m-%dT%H:%M:%SZ" "${PR_OPENED_DATE//\"}" "+%Y-%m-%dT%H:%M:%SZ")
+    THREE_DAYS_AFTER_PR_OPENED=$(date -u -d"${PR_OPENED_DATE//\"} +3 days" "+%Y-%m-%dT%H:%M:%SZ")
     
     PR_REVIEW_COMMENTS=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "/repos/apollographql/${REPOSITORY}/pulls/${pr//,}/comments")
     
