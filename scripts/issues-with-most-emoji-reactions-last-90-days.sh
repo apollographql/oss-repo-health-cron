@@ -39,6 +39,8 @@ for row in $(echo "${ISSUES_CREATED_LAST_90_DAYS}" | jq -r '.[] | @base64'); do
           EMOJI_REMAPPED=":+1:"
         elif [ "$REACTION_CONTENT" == "thumbs_down" ]; then
           EMOJI_REMAPPED=":-1:"
+        elif [ "$REACTION_CONTENT" == "hooray" ]; then
+          EMOJI_REMAPPED=":tada:"
         else
           EMOJI_REMAPPED=":${REACTION_CONTENT}:"
         fi
