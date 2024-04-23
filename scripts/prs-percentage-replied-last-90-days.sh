@@ -4,10 +4,11 @@ PRS_CREATED_LAST_90_DAYS=$(gh pr list --search "${FILTERED_OUT_LABELS} ${FILTERE
 NUM_PRS_CREATED=$(jq '. | length' <<< $PRS_CREATED_LAST_90_DAYS)
 NUM_PRS_REPLIED_TO=0
 
-if [ $PRS_CREATED_LAST_90_DAYS = "0" ]; then
+echo "Community PRs created in the last 90 days: $NUM_PRS_CREATED"
+
+if [ $NUM_PRS_CREATED = "0" ]; then
   echo "No PRs to process. Exiting."
   PERCENTAGE_PRS_REPLIED_TO="N/A"
-  NUM_PRS_CREATED=0
 else
   for pr in $(echo -e $PRS_CREATED_LAST_90_DAYS | jq -s 'flatten(1)')
   do
