@@ -5,13 +5,13 @@
 ## log list of issues and PRs with new comments in the last 7 days
 
 PD_OUTGOING=$(curl --request GET \
-  --url "https://api.pagerduty.com/schedules/${PD_WEB_SCHEDULE_ID}/users?since=${DATE_2_DAYS_AGO}&until=${DATE_YESTERDAY}" \
+  --url "https://api.pagerduty.com/schedules/${PD_KOTLIN_SCHEDULE_ID}/users?since=${DATE_2_DAYS_AGO}&until=${DATE_YESTERDAY}" \
   --header 'Accept: application/json' \
   --header "Authorization: Token token=${PD_TOKEN}" \
   --header 'Content-Type: application/json')
 
 PD_INCOMING=$(curl --request GET \
-  --url "https://api.pagerduty.com/schedules/${PD_WEB_SCHEDULE_ID}/users?since=${DATE_TOMORROW}&until=${DATE_2_DAYS_IN_FUTURE}" \
+  --url "https://api.pagerduty.com/schedules/${PD_KOTLIN_SCHEDULE_ID}/users?since=${DATE_TOMORROW}&until=${DATE_2_DAYS_IN_FUTURE}" \
   --header 'Accept: application/json' \
   --header "Authorization: Token token=${PD_TOKEN}" \
   --header 'Content-Type: application/json')
@@ -23,22 +23,18 @@ OUTGOING_CARETAKER_SLACK_HANDLE=""
 INCOMING_CARETAKER_SLACK_HANDLE=""
 
 # Weed to use Slack user ID here in order to @-mention via Slack "blocks" API
-if [ "${OUTGOING_USER_EMAIL//\"}" == "${JEREL_EMAIL}" ]; then
-  OUTGOING_CARETAKER_SLACK_HANDLE=$JEREL_SLACK_ID
-elif [ "${OUTGOING_USER_EMAIL//\"}" == "${ALESSIA_EMAIL}" ]; then
-  OUTGOING_CARETAKER_SLACK_HANDLE=$ALESSIA_SLACK_ID
-elif [ "${OUTGOING_USER_EMAIL//\"}" == "${LENZ_EMAIL}" ]; then
-  OUTGOING_CARETAKER_SLACK_HANDLE=$LENZ_SLACK_ID
+if [ "${OUTGOING_USER_EMAIL//\"}" == "${MARTIN_EMAIL}" ]; then
+  OUTGOING_CARETAKER_SLACK_HANDLE=$MARTIN_SLACK_ID
+elif [ "${OUTGOING_USER_EMAIL//\"}" == "${BENOIT_EMAIL}" ]; then
+  OUTGOING_CARETAKER_SLACK_HANDLE=$BENOIT_SLACK_ID
 elif [ "${OUTGOING_USER_EMAIL//\"}" == "${JEFF_EMAIL}" ]; then
   OUTGOING_CARETAKER_SLACK_HANDLE=$JEFF_SLACK_ID
 fi
 
-if [ "${INCOMING_USER_EMAIL//\"}" == "${JEREL_EMAIL}" ]; then
-  INCOMING_CARETAKER_SLACK_HANDLE=$JEREL_SLACK_ID
-elif [ "${INCOMING_USER_EMAIL//\"}" == "${ALESSIA_EMAIL}" ]; then
-  INCOMING_CARETAKER_SLACK_HANDLE=$ALESSIA_SLACK_ID
-elif [ "${INCOMING_USER_EMAIL//\"}" == "${LENZ_EMAIL}" ]; then
-  INCOMING_CARETAKER_SLACK_HANDLE=$LENZ_SLACK_ID
+if [ "${INCOMING_USER_EMAIL//\"}" == "${MARTIN_EMAIL}" ]; then
+  INCOMING_CARETAKER_SLACK_HANDLE=$MARTIN_SLACK_ID
+elif [ "${INCOMING_USER_EMAIL//\"}" == "${BENOIT_EMAIL}" ]; then
+  INCOMING_CARETAKER_SLACK_HANDLE=$BENOIT_SLACK_ID
 elif [ "${INCOMING_USER_EMAIL//\"}" == "${JEFF_EMAIL}" ]; then
   INCOMING_CARETAKER_SLACK_HANDLE=$JEFF_SLACK_ID
 fi
