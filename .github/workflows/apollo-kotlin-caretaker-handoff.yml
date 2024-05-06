@@ -1,4 +1,4 @@
-name: apollo-client-caretaker-handoff
+name: apollo-kotlin-caretaker-handoff
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
     - cron: "0 16 * * 3"
 
 jobs:
-  apollo-client-caretaker-handoff:
+  apollo-kotlin-caretaker-handoff:
     runs-on: ubuntu-latest
     if: github.repository == 'apollographql/oss-repo-health-cron'
     steps:
@@ -15,43 +15,41 @@ jobs:
         with:
           path: main
 
-      - name: Checkout Apollo Client repo
+      - name: Checkout Apollo Kotlin repo
         uses: actions/checkout@v4
         with:
-          repository: apollographql/apollo-client
-          path: apollo-client
+          repository: apollographql/apollo-kotlin
+          path: apollo-kotlin
 
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
-      - name: Run apollo-client-caretaker-handoff.sh
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-client-caretaker-handoff.sh
+      - name: Run apollo-kotlin-caretaker-handoff.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-kotlin-caretaker-handoff.sh
         id: caretaker-handoff
         env:
           PD_TOKEN: ${{ secrets.PD_TOKEN }}
           PD_ORG_ID: ${{ secrets.PD_ORG_ID }}
           JEREL_EMAIL: ${{ secrets.JEREL_EMAIL }}
           ALESSIA_EMAIL: ${{ secrets.ALESSIA_EMAIL }}
-          JEFF_EMAIL: ${{ secrets.JEFF_EMAIL }}
           LENZ_EMAIL: ${{ secrets.LENZ_EMAIL }}
           JEREL_SLACK_ID: ${{ secrets.JEREL_SLACK_ID }}
           ALESSIA_SLACK_ID: ${{ secrets.ALESSIA_SLACK_ID }}
-          JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
           LENZ_SLACK_ID: ${{ secrets.LENZ_SLACK_ID }}
 
       - name: Run issues-with-new-comments-last-7-days.sh
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
         id: issues-new-comments-last-7-days
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run prs-with-new-comments-last-7-days.sh
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-with-new-comments-last-7-days.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/prs-with-new-comments-last-7-days.sh
         id: prs-new-comments-last-7-days
         env:
-          REPOSITORY: apollo-client
+          REPOSITORY: apollo-kotlin
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          IGNORE_USERS: "-author:alessbell -author:jerelmiller -author:phryneas -author:app/renovate -author:app/github-actions"
+          IGNORE_USERS: "-author:martinbonnin -author:BoD -author:app/renovate -author:app/github-actions"
 
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.26.0
@@ -60,7 +58,7 @@ jobs:
           # See also: https://api.slack.com/methods/chat.postMessage#channels
           # You can pass in multiple channels to post to by providing
           # a comma-delimited list of channel IDs
-          channel-id: ${{ secrets.APOLLO_CLIENT_SLACK_CHANNEL_ID }}
+          channel-id: ${{ secrets.APOLLO_KOTLIN_SLACK_CHANNEL_ID }}
           payload: |
             {
               "blocks": [
