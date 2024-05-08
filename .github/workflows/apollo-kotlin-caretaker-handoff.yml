@@ -30,12 +30,12 @@ jobs:
         env:
           PD_TOKEN: ${{ secrets.PD_TOKEN }}
           PD_ORG_ID: ${{ secrets.PD_ORG_ID }}
-          JEREL_EMAIL: ${{ secrets.JEREL_EMAIL }}
-          ALESSIA_EMAIL: ${{ secrets.ALESSIA_EMAIL }}
-          LENZ_EMAIL: ${{ secrets.LENZ_EMAIL }}
-          JEREL_SLACK_ID: ${{ secrets.JEREL_SLACK_ID }}
-          ALESSIA_SLACK_ID: ${{ secrets.ALESSIA_SLACK_ID }}
-          LENZ_SLACK_ID: ${{ secrets.LENZ_SLACK_ID }}
+          MARTIN_EMAIL: ${{ secrets.MARTIN_EMAIL }}
+          BENOIT_EMAIL: ${{ secrets.BENOIT_EMAIL }}
+          JEFF_EMAIL: ${{ secrets.JEFF_EMAIL }}
+          MARTIN_SLACK_ID: ${{ secrets.MARTIN_SLACK_ID }}
+          BENOIT_SLACK_ID: ${{ secrets.BENOIT_SLACK_ID }}
+          JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
 
       - name: Run issues-with-new-comments-last-7-days.sh
         run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
