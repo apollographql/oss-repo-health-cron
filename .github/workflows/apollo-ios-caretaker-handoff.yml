@@ -29,7 +29,7 @@ jobs:
         id: ios-caretaker-handoff
         env:
           PD_TOKEN: ${{ secrets.PD_TOKEN }}
-          PD_ORG_ID: ${{ secrets.PD_ORG_ID }}
+          PD_IOS_SCHEDULE_ID: ${{ secrets.PD_IOS_SCHEDULE_ID }}
           ANTHONY_EMAIL: ${{ secrets.ANTHONY_EMAIL }}
           CALVIN_EMAIL: ${{ secrets.CALVIN_EMAIL }}
           JEFF_EMAIL: ${{ secrets.JEFF_EMAIL }}
