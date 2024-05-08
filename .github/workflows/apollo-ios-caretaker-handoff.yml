@@ -4,6 +4,12 @@ on:
   schedule:
     # Every Wednesday at 12:00 PM PST
     - cron: "0 20 * * 3"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref
+        required: true
+        default: main
 
 jobs:
   apollo-ios-caretaker-handoff:
