@@ -27,6 +27,12 @@ jobs:
           repository: apollographql/apollo-ios
           path: apollo-ios
 
+      - name: Checkout Apollo iOS Dev repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-ios-dev
+          path: apollo-ios-dev
+
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
