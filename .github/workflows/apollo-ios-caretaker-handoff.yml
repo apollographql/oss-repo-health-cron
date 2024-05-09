@@ -80,7 +80,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 8PM UTC._"
+                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.ios-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.ios-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 8PM UTC._"
                   }
                 },
                 {
