@@ -61,7 +61,7 @@ jobs:
         run: cd ${GITHUB_WORKSPACE}/apollo-ios-dev && bash ${GITHUB_WORKSPACE}/main/scripts/prs-with-new-comments-last-7-days.sh
         id: prs-new-comments-last-7-days
         env:
-          REPOSITORY: apollo-ios
+          REPOSITORY: apollo-ios-dev
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IGNORE_USERS: "-author:AnthonyMDev -author:calvincestari -author:bobafetters -author:app/renovate -author:app/github-actions"
 
@@ -80,7 +80,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 4PM UTC._"
+                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 8PM UTC._"
                   }
                 },
                 {
