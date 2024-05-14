@@ -2,7 +2,7 @@
 
 WEEKLY_SLACK_BOT_MESSAGE_ISSUES=""
 
-ALL_ISSUES=$(gh issue list --limit 1000 --json number --jq '[.[] | .number]')
+ALL_ISSUES=$(gh issue list --state all --limit 1000 --json number --jq '[.[] | .number]')
 
 for issue in $(echo -e $ALL_ISSUES | jq -s 'flatten(1)')
 do

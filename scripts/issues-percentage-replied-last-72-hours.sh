@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ISSUES_CREATED_LAST_3_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:${DATE_3_DAYS_AGO}..${DATE_TODAY}" --limit 1000 --json number --jq '[.[] | .number]')
+ISSUES_CREATED_LAST_3_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:${DATE_3_DAYS_AGO}..${DATE_TODAY}" --state all --limit 1000 --json number --jq '[.[] | .number]')
 ISSUES_SLACK_BOT_MESSAGE=""
 NUM_ISSUES_TO_REPLY_TO=0
 
