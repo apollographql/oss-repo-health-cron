@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ISSUES_CREATED_LAST_90_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:>=${DATE_90_DAYS_AGO} sort:reactions" --state all --limit 10 --json number,reactionGroups,url,title)
+ISSUES_CREATED_LAST_90_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:>=${DATE_90_DAYS_AGO} sort:reactions" --limit 10 --json number,reactionGroups,url,title)
 
 echo $ISSUES_CREATED_LAST_90_DAYS
 INDEX=1
