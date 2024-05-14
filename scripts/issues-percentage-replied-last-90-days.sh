@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ISSUES_CREATED_LAST_90_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:${DATE_90_DAYS_AGO}..${DATE_TODAY}" --limit 1000 --json number --jq '[.[] | .number]')
+ISSUES_CREATED_LAST_90_DAYS=$(gh issue list --search "${FILTERED_OUT_LABELS} ${FILTERED_OUT_USERS} created:${DATE_90_DAYS_AGO}..${DATE_TODAY}" --state all --limit 1000 --json number --jq '[.[] | .number]')
 NUM_ISSUES_CREATED=$(jq '. | length' <<< $ISSUES_CREATED_LAST_90_DAYS)
 NUM_ISSUES_REPLIED_TO=0
 
