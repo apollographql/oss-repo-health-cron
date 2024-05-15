@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PRS_CREATED_LAST_3_DAYS=$(gh pr list --search "${FILTERED_OUT_LABELS} ${IGNORE_USERS} created:${DATE_3_DAYS_AGO}..${DATE_TODAY} review:none -is:draft" --limit 1000 --state all --json number --jq '[.[] | .number]')
+PRS_CREATED_LAST_3_DAYS=$(gh pr list --search "${FILTERED_OUT_LABELS} ${IGNORE_USERS} created:${DATE_3_DAYS_AGO}..${DATE_TODAY} review:none -is:draft" --limit 1000 --json number --jq '[.[] | .number]')
 PRS_SLACK_BOT_MESSAGE=""
 NUM_PRS_TO_REPLY_TO=0
 
