@@ -2,8 +2,8 @@ name: apollo-ios-caretaker-handoff
 
 on:
   schedule:
-    # Every Wednesday at 12:00 PM PST
-    - cron: "0 20 * * 3"
+    # Every Wednesday at 10:00 AM PDT / 9:00 AM PST / 1:00 PM EDT / 12:00 PM EST / 5:00 PM UTC
+    - cron: "0 17 * * 3"
   workflow_dispatch:
     inputs:
       ref:
