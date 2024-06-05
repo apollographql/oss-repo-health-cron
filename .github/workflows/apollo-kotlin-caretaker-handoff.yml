@@ -42,6 +42,8 @@ jobs:
           MARTIN_SLACK_ID: ${{ secrets.MARTIN_SLACK_ID }}
           BENOIT_SLACK_ID: ${{ secrets.BENOIT_SLACK_ID }}
           JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_GROUP: ${{ secrets.SLACK_KOTLIN_CARETAKER_GROUP_ID }}
 
       - name: Run issues-with-new-comments-last-7-days.sh
         run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh

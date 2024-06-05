@@ -44,6 +44,8 @@ jobs:
           ALESSIA_SLACK_ID: ${{ secrets.ALESSIA_SLACK_ID }}
           JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
           LENZ_SLACK_ID: ${{ secrets.LENZ_SLACK_ID }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_GROUP: ${{ secrets.SLACK_WEB_CARETAKER_GROUP_ID }}
 
       - name: Run issues-with-new-comments-last-7-days.sh
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
