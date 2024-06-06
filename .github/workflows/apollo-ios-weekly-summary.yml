@@ -2,7 +2,7 @@ name: apollo-ios-weekly-summary
 
 on:
   schedule:
-    # Every Wednesday at 8:00 AM PST
+    # Every Wednesday at 10:00 AM PDT / 9:00 AM PST / 1:00 PM EDT / 12:00 PM EST / 5:00 PM UTC
     - cron: "0 17 * * 3"
 
 jobs:

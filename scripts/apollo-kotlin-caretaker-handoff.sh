@@ -39,5 +39,13 @@ elif [ "${INCOMING_USER_EMAIL//\"}" == "${JEFF_EMAIL}" ]; then
   INCOMING_CARETAKER_SLACK_HANDLE=$JEFF_SLACK_ID
 fi
 
+# Update Slack usergroup for @caretaker-kotlin
+curl --request POST \
+  --url "https://slack.com/api/usergroups.users.update" \
+  --header "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data "{\"usergroup\":\"${SLACK_USER_GROUP}\", \"users\":[\"${INCOMING_CARETAKER_SLACK_HANDLE}\"]}"
+
 echo "OUTGOING_CARETAKER_SLACK_HANDLE=${OUTGOING_CARETAKER_SLACK_HANDLE}" >> "$GITHUB_OUTPUT"
 echo "INCOMING_CARETAKER_SLACK_HANDLE=${INCOMING_CARETAKER_SLACK_HANDLE}" >> "$GITHUB_OUTPUT"

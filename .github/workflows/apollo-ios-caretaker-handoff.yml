@@ -50,6 +50,8 @@ jobs:
           CALVIN_SLACK_ID: ${{ secrets.CALVIN_SLACK_ID }}
           JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
           ZACH_SLACK_ID: ${{ secrets.ZACH_SLACK_ID }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_GROUP: ${{ secrets.SLACK_IOS_CARETAKER_GROUP_ID }}
 
       - name: Run issues-with-new-comments-last-7-days.sh
         run: cd ${GITHUB_WORKSPACE}/apollo-ios && bash ${GITHUB_WORKSPACE}/main/scripts/issues-with-new-comments-last-7-days.sh
@@ -80,7 +82,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.ios-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.ios-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\nPlease don't forget to update the @caretaker-ios user group so you will be notified when someone uses it.\n_Note: This :github: workflow will run every Wednesday at 8PM UTC._"
+                    "text": "Apollo iOS caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.ios-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.ios-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 5PM UTC._"
                   }
                 },
                 {
