@@ -1,6 +1,12 @@
 name: apollo-client-repo-stats
 
 on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref
+        required: true
+        default: main
   schedule:
     - cron: "0 12 * * 1-5"
 
