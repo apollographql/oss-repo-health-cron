@@ -70,6 +70,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Run apollo-client-team-prs-awaiting-review.sh
+        id: team-prs-awaiting-review
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-client-team-prs-awaiting-review.sh
+        env:
+          # GH_TOKEN has org:read scope
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.26.0
         with:
@@ -111,6 +118,15 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Team PRs awaiting review:*${{ steps.team-prs-awaiting-review.outputs.TEAM_PRS_AWAITING_REVIEW_MARKDOWN }}"
                     }
                   ]
                 }
