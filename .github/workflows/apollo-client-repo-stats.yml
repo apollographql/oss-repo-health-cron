@@ -70,7 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run issues-percentage-replied-last-72-hours.sh
+      - name: Run apollo-client-team-prs-awaiting-review.sh
         id: team-prs-awaiting-review
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-client-team-prs-awaiting-review.sh
         env:
