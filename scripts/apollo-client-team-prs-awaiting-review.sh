@@ -52,19 +52,19 @@ do
 
   UNIQUE_AWAITING_REVIEWS=$(jq -M '. |= unique_by(.title)' <<< $AWAITING_REVIEW_FROM_TS_TEAM)
 
-  for pr in "${UNIQUE_AWAITING_REVIEWS[@]}"
+  for pr in $(echo "${UNIQUE_AWAITING_REVIEWS}" | jq -r '.[] | @base64')
   do
-    if [ "$pr" = "[]" ]; then
-      :
-    else
-      AUTHOR=$(jq ".[].author.login" <<< $pr)
-      REPO=$(jq ".[].headRepository.name" <<< $pr)
-      PR_URL=$(jq ".[].url" <<< $pr)
-      TITLE=$(jq ".[].title" <<< $pr)
-
-      NUM_PRS_AWAITING_REVIEW=$((NUM_PRS_AWAITING_REVIEW+1))
-      TEAM_PRS_AWAITING_REVIEW_MARKDOWN="${TEAM_PRS_AWAITING_REVIEW_MARKDOWN}\n<${PR_URL//\"}|[${REPO//\"}] ${TITLE//\"} (${AUTHOR//\"})>"
-    fi
+    _jq() {
+      echo ${pr} | base64 --decode | jq -r ${1}
+    }
+    
+    AUTHOR=$(_jq '.author.login')
+    PR_URL=$(_jq '.url')
+    REPO=$(_jq '.headRepository.name')
+    TITLE=$(_jq '.title')
+    
+    NUM_PRS_AWAITING_REVIEW=$((NUM_PRS_AWAITING_REVIEW+1))
+    TEAM_PRS_AWAITING_REVIEW_MARKDOWN="${TEAM_PRS_AWAITING_REVIEW_MARKDOWN}\n<${PR_URL//\"}|[${REPO//\"}] ${TITLE//\"} (${AUTHOR//\"})>"
   done
 done
 
