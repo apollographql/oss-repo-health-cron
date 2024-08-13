@@ -155,43 +155,46 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Today's TypeScript Client team repository health check :stopwatch:"
+                    "text": "Today's TypeScript Client team repository health check :stopwatch:*\n_Note: This :github: workflow will run every weekday at 12PM UTC._"
                   }
+                },
+                {
+                  "type": "divider"
                 },
                 {
                   "type": "section",
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client` issues <72h old:*${{ steps.issues-without-replies-apollo-client.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client` PRs <72h old:*${{ steps.prs-without-replies-apollo-client.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client-devtools` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client-devtools.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client-devtools` issues <72h old:*${{ steps.issues-without-replies-apollo-client-devtools.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client-devtools` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client-devtools.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client-devtools` PRs <72h old:*${{ steps.prs-without-replies-apollo-client-devtools.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client-nextjs` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client-nextjs.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client-nextjs` issues <72h old:*${{ steps.issues-without-replies-apollo-client-nextjs.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client-nextjs` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client-nextjs.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client-nextjs` PRs <72h old:*${{ steps.prs-without-replies-apollo-client-nextjs.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`vscode-graphql` issues <72h old without a reply:*${{ steps.issues-without-replies-vscode-graphql.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*`vscode-graphql` issues <72h old:*${{ steps.issues-without-replies-vscode-graphql.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`vscode-graphql` PRs <72h old without a reply:*${{ steps.prs-without-replies-vscode-graphql.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*`vscode-graphql` PRs <72h old:*${{ steps.prs-without-replies-vscode-graphql.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     }
                   ]
                 },
