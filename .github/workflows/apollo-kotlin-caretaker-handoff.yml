@@ -74,7 +74,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo Client caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.kotlin-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.kotlin-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 4PM UTC._"
+                    "text": "Apollo Kotlin caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.kotlin-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.kotlin-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 4PM UTC._"
                   }
                 },
                 {

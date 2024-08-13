@@ -57,17 +57,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: apollo-kotlin
 
-      - name: Run prs-percentage-replied-last-72-hours.sh
+      - name: Run prs-without-replies-last-72-hours.sh
         id: prs-without-replies-last-72-hours
-        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-72-hours.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IGNORE_USERS: "-author:BoD -author:martinbonnin"
           REPOSITORY: apollo-kotlin
 
-      - name: Run issues-percentage-replied-last-72-hours.sh
+      - name: Run issues-without-replies-last-72-hours.sh
         id: issues-without-replies-last-72-hours
-        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-72-hours.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-kotlin && bash ${GITHUB_WORKSPACE}/main/scripts/issues-without-replies-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

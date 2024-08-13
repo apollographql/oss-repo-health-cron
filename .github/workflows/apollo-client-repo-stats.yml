@@ -26,6 +26,24 @@ jobs:
           repository: apollographql/apollo-client
           path: apollo-client
 
+      - name: Checkout Apollo Client Devtools repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client-devtools
+          path: apollo-client-devtools
+
+      - name: Checkout Apollo Client Next.js repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client-nextjs
+          path: apollo-client-nextjs
+
+      - name: Checkout VSCode GraphQL repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/vscode-graphql
+          path: vscode-graphql
+
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
@@ -63,16 +81,55 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: apollo-client
 
-      - name: Run prs-percentage-replied-last-72-hours.sh
-        id: prs-without-replies-last-72-hours
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-72-hours.sh
+      - name: Run prs-without-replies-last-72-hours.sh for Apollo Client
+        id: prs-without-replies-apollo-client
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: apollo-client
 
-      - name: Run issues-percentage-replied-last-72-hours.sh
-        id: issues-without-replies-last-72-hours
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-72-hours.sh
+      - name: Run issues-without-replies-last-72-hours.sh for Apollo Client
+        id: issues-without-replies-apollo-client
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-without-replies-last-72-hours.sh for Apollo Client Devtools
+        id: prs-without-replies-apollo-client-devtools
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-devtools && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client-devtools
+
+      - name: Run issues-without-replies-last-72-hours.sh for Apollo Client Devtools
+        id: issues-without-replies-apollo-client-devtools
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-devtools && bash ${GITHUB_WORKSPACE}/main/scripts/issues-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-without-replies-last-72-hours.sh for Apollo Client Next.js
+        id: prs-without-replies-apollo-client-nextjs
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-nextjs && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client-nextjs
+
+      - name: Run issues-without-replies-last-72-hours.sh for Apollo Client Next.js
+        id: issues-without-replies-apollo-client-nextjs
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-nextjs && bash ${GITHUB_WORKSPACE}/main/scripts/issues-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-without-replies-last-72-hours.sh for VSCode GraphQL
+        id: prs-without-replies-vscode-graphql
+        run: cd ${GITHUB_WORKSPACE}/vscode-graphql && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: vscode-graphql
+
+      - name: Run issues-without-replies-last-72-hours.sh for VSCode GraphQL
+        id: issues-without-replies-vscode-graphql
+        run: cd ${GITHUB_WORKSPACE}/vscode-graphql && bash ${GITHUB_WORKSPACE}/main/scripts/issues-without-replies-last-72-hours.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -98,7 +155,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Today's Apollo Client repository health check :stopwatch:"
+                    "text": "Today's TypeScript Client team repository health check :stopwatch:"
                   }
                 },
                 {
@@ -106,11 +163,35 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*Issues <72h old without a reply:*${{ steps.issues-without-replies-last-72-hours.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*PRs <72h old without a reply:*${{ steps.prs-without-replies-last-72-hours.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*`apollo-client` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`apollo-client-devtools` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client-devtools.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`apollo-client-devtools` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client-devtools.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`apollo-client-nextjs` issues <72h old without a reply:*${{ steps.issues-without-replies-apollo-client-nextjs.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`apollo-client-nextjs` PRs <72h old without a reply:*${{ steps.prs-without-replies-apollo-client-nextjs.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`vscode-graphql` issues <72h old without a reply:*${{ steps.issues-without-replies-vscode-graphql.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*`vscode-graphql` PRs <72h old without a reply:*${{ steps.prs-without-replies-vscode-graphql.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     }
                   ]
                 },
@@ -119,11 +200,11 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*% of issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_CREATED }})"
+                      "text": "*% of `apollo-client` issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_CREATED }})"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*% of PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
+                      "text": "*% of `apollo-client` PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
                     }
                   ]
                 },
