@@ -2,7 +2,7 @@ name: apollo-client-caretaker-handoff
 
 on:
   schedule:
-    # Every Wednesday at 8:00 AM PST
+    # Every Wednesday at 4:00 PM UTC
     - cron: "0 16 * * 3"
   workflow_dispatch:
     inputs:
@@ -26,6 +26,24 @@ jobs:
         with:
           repository: apollographql/apollo-client
           path: apollo-client
+
+      - name: Checkout Apollo Client Devtools repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client-devtools
+          path: apollo-client-devtools
+
+      - name: Checkout Apollo Client Next.js repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/apollo-client-nextjs
+          path: apollo-client-nextjs
+
+      - name: Checkout VSCode GraphQL repo
+        uses: actions/checkout@v4
+        with:
+          repository: apollographql/vscode-graphql
+          path: vscode-graphql
 
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
@@ -61,6 +79,58 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           IGNORE_USERS: "-author:alessbell -author:jerelmiller -author:phryneas -author:app/renovate -author:app/github-actions"
 
+      - name: Run issues-percentage-replied-last-90-days.sh for Apollo Client
+        id: issues-percentage-replied-last-90-days-apollo-client
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh for Apollo Client
+        id: prs-percentage-replied-last-90-days-apollo-client
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client
+
+      - name: Run issues-percentage-replied-last-90-days.sh for Apollo Client Devtools
+        id: issues-percentage-replied-last-90-days-apollo-client-devtools
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-devtools && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh for Apollo Client Devtools
+        id: prs-percentage-replied-last-90-days-apollo-client-devtools
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-devtools && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client-devtools
+
+      - name: Run issues-percentage-replied-last-90-days.sh for Apollo Client Next.js
+        id: issues-percentage-replied-last-90-days-apollo-client-nextjs
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-nextjs && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh for Apollo Client Next.js
+        id: prs-percentage-replied-last-90-days-apollo-client-nextjs
+        run: cd ${GITHUB_WORKSPACE}/apollo-client-nextjs && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: apollo-client-nextjs
+
+      - name: Run issues-percentage-replied-last-90-days.sh for VSCode GraphQL
+        id: issues-percentage-replied-last-90-days-vscode-graphql
+        run: cd ${GITHUB_WORKSPACE}/vscode-graphql && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prs-percentage-replied-last-90-days.sh for VSCode GraphQL
+        id: prs-percentage-replied-last-90-days-vscode-graphql
+        run: cd ${GITHUB_WORKSPACE}/vscode-graphql && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: vscode-graphql
+
       - name: Send a Slack notification
         uses: slackapi/slack-github-action@v1.26.0
         with:
@@ -76,7 +146,30 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo Client caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 4PM UTC._"
+                    "text": "TypeScript Client caretaker hand-off :running:\nThanks for your help, <@${{ steps.caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Wednesday at 4PM UTC._"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% issues in last 90d with a reply in <72h*"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*% PRs in last 90d with a reply in <72h*"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client`*"
                   }
                 },
                 {
@@ -84,11 +177,84 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "Issues with new comments in the last week:\n${{ steps.issues-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_ISSUES }}"
+                      "text": "${{ steps.issues-percentage-replied-last-90-days-apollo-client.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days-apollo-client.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days-apollo-client.outputs.NUM_ISSUES_CREATED }})"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "PRs with new comments in the last week:\n${{ steps.prs-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_PRS }}"
+                      "text": "${{ steps.prs-percentage-replied-last-90-days-apollo-client.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days-apollo-client.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days-apollo-client.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client-devtools`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-percentage-replied-last-90-days-apollo-client-devtools.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days-apollo-client-devtools.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days-apollo-client-devtools.outputs.NUM_ISSUES_CREATED }})"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-percentage-replied-last-90-days-apollo-client-devtools.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days-apollo-client-devtools.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days-apollo-client-devtools.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client-nextjs`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-percentage-replied-last-90-days-apollo-client-nextjs.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days-apollo-client-nextjs.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days-apollo-client-nextjs.outputs.NUM_ISSUES_CREATED }})"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-percentage-replied-last-90-days-apollo-client-nextjs.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days-apollo-client-nextjs.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days-apollo-client-nextjs.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`vscode-graphql`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-percentage-replied-last-90-days-vscode-graphql.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days-vscode-graphql.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days-vscode-graphql.outputs.NUM_ISSUES_CREATED }})"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-percentage-replied-last-90-days-vscode-graphql.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days-vscode-graphql.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days-vscode-graphql.outputs.NUM_PRS_CREATED }})"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Apollo Client issues with new comments in the last week:*\n${{ steps.issues-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_ISSUES }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Apollo Client PRs with new comments in the last week:*\n${{ steps.prs-new-comments-last-7-days.outputs.WEEKLY_SLACK_BOT_MESSAGE_PRS }}"
                     }
                   ]
                 }

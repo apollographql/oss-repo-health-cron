@@ -68,19 +68,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run issues-percentage-replied-last-90-days.sh
-        id: issues-percentage-replied-last-90-days
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/issues-percentage-replied-last-90-days.sh
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run prs-percentage-replied-last-90-days.sh
-        id: prs-percentage-replied-last-90-days
-        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-percentage-replied-last-90-days.sh
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY: apollo-client
-
       - name: Run prs-without-replies-last-72-hours.sh for Apollo Client
         id: prs-without-replies-apollo-client
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/prs-without-replies-last-72-hours.sh
@@ -166,48 +153,91 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client` issues <72h old:*${{ steps.issues-without-replies-apollo-client.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                      "text": "*Issues <72h old without a reply*"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*`apollo-client` PRs <72h old:*${{ steps.prs-without-replies-apollo-client.outputs.PRS_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`apollo-client-devtools` issues <72h old:*${{ steps.issues-without-replies-apollo-client-devtools.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`apollo-client-devtools` PRs <72h old:*${{ steps.prs-without-replies-apollo-client-devtools.outputs.PRS_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`apollo-client-nextjs` issues <72h old:*${{ steps.issues-without-replies-apollo-client-nextjs.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`apollo-client-nextjs` PRs <72h old:*${{ steps.prs-without-replies-apollo-client-nextjs.outputs.PRS_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`vscode-graphql` issues <72h old:*${{ steps.issues-without-replies-vscode-graphql.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*`vscode-graphql` PRs <72h old:*${{ steps.prs-without-replies-vscode-graphql.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                      "text": "*PRs <72h old without a reply*"
                     }
                   ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client`*"
+                  }
                 },
                 {
                   "type": "section",
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*% of `apollo-client` issues in last 90d with reply in <72h:*\n${{ steps.issues-percentage-replied-last-90-days.outputs.PERCENTAGE_ISSUES_REPLIED_TO }}% (${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_REPLIED_TO }}/${{ steps.issues-percentage-replied-last-90-days.outputs.NUM_ISSUES_CREATED }})"
+                      "text": "${{ steps.issues-without-replies-apollo-client.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "*% of `apollo-client` PRs in last 90d with reply in <72h:*\n${{ steps.prs-percentage-replied-last-90-days.outputs.PERCENTAGE_PRS_REPLIED_TO }} (${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_REPLIED_TO }}/${{ steps.prs-percentage-replied-last-90-days.outputs.NUM_PRS_CREATED }})"
+                      "text": "${{ steps.prs-without-replies-apollo-client.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client-devtools`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-without-replies-apollo-client-devtools.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-without-replies-apollo-client-devtools.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`apollo-client-nexjs`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-without-replies-apollo-client-nextjs.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-without-replies-apollo-client-nextjs.outputs.PRS_SLACK_BOT_MESSAGE }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*`vscode-graphql`*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.issues-without-replies-vscode-graphql.outputs.ISSUES_SLACK_BOT_MESSAGE }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "${{ steps.prs-without-replies-vscode-graphql.outputs.PRS_SLACK_BOT_MESSAGE }}"
                     }
                   ]
                 },
