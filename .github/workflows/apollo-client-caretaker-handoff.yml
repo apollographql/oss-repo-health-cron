@@ -48,6 +48,12 @@ jobs:
       - name: Run get-relative-dates.sh
         run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
 
+      - name: Run get-apollo-org-members.sh
+        run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/get-apollo-org-members.sh
+        env:
+          # GH_TOKEN has org:read scope
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
       - name: Run apollo-client-caretaker-handoff.sh
         run: cd ${GITHUB_WORKSPACE}/apollo-client && bash ${GITHUB_WORKSPACE}/main/scripts/apollo-client-caretaker-handoff.sh
         id: caretaker-handoff

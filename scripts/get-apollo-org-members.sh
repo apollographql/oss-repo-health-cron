@@ -2,8 +2,6 @@
 
 APOLLO_GRAPHQL_ORG_MEMBERS=$(gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" -H "Authorization: Bearer $GH_TOKEN" /orgs/apollographql/members --paginate --jq '[.[] | .login]')
 
-echo "Apollo GraphQL org members: ${APOLLO_GRAPHQL_ORG_MEMBERS}"
-
 # Filter out arbitrary users here, in addition to Apollo GraphQL org members
 FILTERED_OUT_USERS="-author:peakematt-2 -author:app/github-actions -author:app/renovate"
 # Filter out arbitrary labels here
