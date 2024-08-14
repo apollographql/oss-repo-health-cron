@@ -142,7 +142,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Today's TypeScript Client team repository health check :stopwatch:*\n_Note: This :github: workflow will run every weekday at 12PM UTC._"
+                    "text": "Today's TypeScript Client team repository health check :stopwatch:\n_Note: This :github: workflow will run every weekday at 12PM UTC._"
                   }
                 },
                 {
