@@ -205,7 +205,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*`apollo-client-nexjs`*"
+                    "text": "*`apollo-client-nextjs`*"
                   }
                 },
                 {
