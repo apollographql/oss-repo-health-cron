@@ -138,7 +138,7 @@ jobs:
           REPOSITORY: vscode-graphql
 
       - name: Send a Slack notification
-        uses: slackapi/slack-github-action@v1.26.0
+        uses: slackapi/slack-github-action@v1.27.0
         with:
           # Slack channel id, channel name, or user id to post message
           # See also: https://api.slack.com/methods/chat.postMessage#channels
