@@ -61,11 +61,9 @@ jobs:
           PD_TOKEN: ${{ secrets.PD_TOKEN }}
           PD_WEB_SCHEDULE_ID: ${{ secrets.PD_WEB_SCHEDULE_ID }}
           JEREL_EMAIL: ${{ secrets.JEREL_EMAIL }}
-          ALESSIA_EMAIL: ${{ secrets.ALESSIA_EMAIL }}
           JEFF_EMAIL: ${{ secrets.JEFF_EMAIL }}
           LENZ_EMAIL: ${{ secrets.LENZ_EMAIL }}
           JEREL_SLACK_ID: ${{ secrets.JEREL_SLACK_ID }}
-          ALESSIA_SLACK_ID: ${{ secrets.ALESSIA_SLACK_ID }}
           JEFF_SLACK_ID: ${{ secrets.JEFF_SLACK_ID }}
           LENZ_SLACK_ID: ${{ secrets.LENZ_SLACK_ID }}
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
