@@ -68,7 +68,7 @@ jobs:
           IGNORE_USERS: "-author:AnthonyMDev -author:calvincestari -author:bobafetters -author:app/renovate -author:app/github-actions"
 
       - name: Send a Slack notification
-        uses: slackapi/slack-github-action@v1.27.0
+        uses: slackapi/slack-github-action@v1.27.1
         with:
           # Slack channel id, channel name, or user id to post message
           # See also: https://api.slack.com/methods/chat.postMessage#channels
