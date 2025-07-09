@@ -4,6 +4,12 @@ on:
   schedule:
     # Every Monday at 1PM UTC (9AM EST)
     - cron: "0 13 * * 1"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref
+        required: true
+        default: main
 
 jobs:
   apollo-client-caretaker-handoff:
