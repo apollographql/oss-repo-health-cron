@@ -17,30 +17,30 @@ jobs:
     if: github.repository == 'apollographql/oss-repo-health-cron'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: main
 
       - name: Checkout Apollo Client repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: apollographql/apollo-client
           path: apollo-client
 
       - name: Checkout Apollo Client Devtools repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: apollographql/apollo-client-devtools
           path: apollo-client-devtools
 
       - name: Checkout Apollo Client Next.js repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: apollographql/apollo-client-nextjs
           path: apollo-client-nextjs
 
       - name: Checkout VSCode GraphQL repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: apollographql/vscode-graphql
           path: vscode-graphql
