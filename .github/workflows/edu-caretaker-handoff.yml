@@ -1,0 +1,69 @@
+name: edu-caretaker-handoff
+
+on:
+  schedule:
+    # Every Monday at 3:00 PM UTC
+    - cron: "0 15 * * 1"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref
+        required: true
+        default: main
+
+jobs:
+  edu-caretaker-handoff:
+    runs-on: ubuntu-latest
+    if: github.repository == 'apollographql/oss-repo-health-cron'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: main
+
+      - name: Run get-relative-dates.sh
+        run: bash ${GITHUB_WORKSPACE}/main/scripts/get-relative-dates.sh
+
+      - name: Skip on even ISO weeks
+        run: |
+          WEEK=$(date -u +%V)
+          if [ $((10#$WEEK % 2)) -eq 0 ]; then
+            echo "Even ISO week ($WEEK); skipping fortnightly run."
+            exit 0
+          fi
+
+      - name: Run edu-caretaker-handoff.sh
+        run: bash ${GITHUB_WORKSPACE}/main/scripts/edu-caretaker-handoff.sh
+        id: edu-caretaker-handoff
+        env:
+          PD_TOKEN: ${{ secrets.PD_TOKEN }}
+          PD_EDU_SCHEDULE_ID: ${{ secrets.PD_EDU_SCHEDULE_ID }}
+          EDU_MEMBER_1_EMAIL: ${{ secrets.EDU_MEMBER_1_EMAIL }}
+          EDU_MEMBER_2_EMAIL: ${{ secrets.EDU_MEMBER_2_EMAIL }}
+          EDU_MEMBER_3_EMAIL: ${{ secrets.EDU_MEMBER_3_EMAIL }}
+          EDU_MEMBER_4_EMAIL: ${{ secrets.EDU_MEMBER_4_EMAIL }}
+          EDU_MEMBER_1_SLACK_ID: ${{ secrets.EDU_MEMBER_1_SLACK_ID }}
+          EDU_MEMBER_2_SLACK_ID: ${{ secrets.EDU_MEMBER_2_SLACK_ID }}
+          EDU_MEMBER_3_SLACK_ID: ${{ secrets.EDU_MEMBER_3_SLACK_ID }}
+          EDU_MEMBER_4_SLACK_ID: ${{ secrets.EDU_MEMBER_4_SLACK_ID }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_USER_GROUP: ${{ secrets.SLACK_EDU_CARETAKER_GROUP_ID }}
+
+      - name: Send a Slack notification
+        uses: slackapi/slack-github-action@v1.27.1
+        with:
+          channel-id: ${{ secrets.APOLLO_EDU_SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Apollo EDU caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.edu-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.edu-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Monday at 3PM UTC._"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
