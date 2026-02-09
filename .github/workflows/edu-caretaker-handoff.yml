@@ -2,8 +2,8 @@ name: edu-caretaker-handoff
 
 on:
   schedule:
-    # Every Monday at 3:00 PM UTC
-    - cron: "0 15 * * 1"
+    # Every Monday at 5:00 PM UTC
+    - cron: "0 17 * * 1"
   workflow_dispatch:
     inputs:
       ref:
@@ -60,7 +60,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Apollo EDU caretaker rotation hand-off :running:\nThanks for your help, <@${{ steps.edu-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / hello again, <@${{ steps.edu-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Monday at 3PM UTC._"
+                    "text": "Apollo EDU caretaker rotation notification :running:\nLast week's caretaker: <@${{ steps.edu-caretaker-handoff.outputs.OUTGOING_CARETAKER_SLACK_HANDLE }}> / This week's caretaker: <@${{ steps.edu-caretaker-handoff.outputs.INCOMING_CARETAKER_SLACK_HANDLE }}> :handshake:\n_Note: This :github: workflow will run every Monday at 17:00 UTC._"
                   }
                 }
               ]
