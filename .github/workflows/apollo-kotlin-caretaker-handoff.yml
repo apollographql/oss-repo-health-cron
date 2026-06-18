@@ -17,12 +17,12 @@ jobs:
     if: github.repository == 'apollographql/oss-repo-health-cron'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: main
 
       - name: Checkout Apollo Kotlin repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: apollographql/apollo-kotlin
           path: apollo-kotlin
