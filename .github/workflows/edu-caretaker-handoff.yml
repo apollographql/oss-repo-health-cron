@@ -50,7 +50,7 @@ jobs:
           SLACK_USER_GROUP: ${{ secrets.SLACK_EDU_CARETAKER_GROUP_ID }}
 
       - name: Send a Slack notification
-        uses: slackapi/slack-github-action@v1.27.1
+        uses: slackapi/slack-github-action@v4.0.0
         with:
           channel-id: ${{ secrets.APOLLO_EDU_SLACK_CHANNEL_ID }}
           payload: |
